@@ -42,7 +42,7 @@ const BlogIndex = ({ data, location }) => {
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
-                  <small>{post.frontmatter.date}</small>
+                  <small>Posted: {post.frontmatter.date}{post.frontmatter.revised ? " | Revised: " + post.frontmatter.revised : ''}</small>
                 </header>
                 <section>
                   <p
@@ -85,6 +85,7 @@ export const pageQuery = graphql`
         }
         frontmatter {
           date(formatString: "MMMM DD, YYYY")
+          revised(formatString: "MMMM DD, YYYY")
           title
           description
         }

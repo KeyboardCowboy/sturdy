@@ -9,15 +9,15 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Sturdy's Stumble`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Chris Albrecht`,
+      summary: `a.k.a. KeyboardCowboy`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    description: `Musings on life, sharing my experiences.`,
     siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `KeyboardCowboy`,
     },
   },
   plugins: [
@@ -97,12 +97,13 @@ module.exports = {
                   frontmatter {
                     title
                     date
+                    revised
                   }
                 }
               }
             }`,
             output: "/rss.xml",
-            title: "Gatsby Starter Blog RSS Feed",
+            title: "Sturdy's Stumble",
           },
         ],
       },
@@ -110,8 +111,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `Gatsby`,
+        name: `Study's Stumble`,
+        short_name: `Sturdy`,
         start_url: `/`,
         background_color: `#ffffff`,
         // This will impact how browsers show your PWA/website
