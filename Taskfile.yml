@@ -1,0 +1,23 @@
+version: '3'
+
+dotenv: ['.env', '.env.defaults']
+
+#includes:
+#  prefix:
+#    taskfile: ./path/to/file.yml
+#    optional: true
+
+output: prefixed
+silent: true
+
+#vars:
+#  VARNAME: var_value
+
+tasks:
+  gatsby:build:
+    cmds:
+      - gatsby build
+  
+  test:
+    cmds:
+      - echo "You're running a task!"

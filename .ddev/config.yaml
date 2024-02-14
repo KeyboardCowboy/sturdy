@@ -2,6 +2,7 @@ name: sturdy
 type: php
 docroot: public
 php_version: "8.1"
+nodejs_version: "18"
 webserver_type: nginx-fpm
 xdebug_enabled: false
 additional_hostnames: []
@@ -11,6 +12,15 @@ database:
     version: "10.4"
 use_dns_when_possible: true
 web_environment: []
+webimage_extra_packages:
+  - build-essential
+  - make
+web_extra_daemons:
+    - name: node.js
+      command: "tail -F package.json > /dev/null"
+      directory: /var/www/html
+web_build:
+  context: ./.ddev/web-build
 
 ####################################
 # Gatsby Config
