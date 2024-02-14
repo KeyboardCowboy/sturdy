@@ -10,8 +10,19 @@ database:
     type: mariadb
     version: "10.4"
 use_dns_when_possible: true
-composer_version: "2"
 web_environment: []
+
+####################################
+# Gatsby Config
+####################################
+mariadb_version: ""
+mysql_version: ""
+composer_version: ""
+router_http_port: "80"
+router_https_port: "443"
+additional_ports:
+    - "8000" # Gatsby's default port
+
 
 # Key features of DDEV's config.yaml:
 
