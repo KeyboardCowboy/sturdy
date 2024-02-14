@@ -20,7 +20,7 @@ const BlogPostTemplate = ({
       >
         <header>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>Posted: {post.frontmatter.date}{post.frontmatter.revised ? " | Revised:" + post.frontmatter.revised : ''}</p>
+          <p>Posted: {post.frontmatter.date}{post.frontmatter.revised ? " | Revised: " + post.frontmatter.revised : ''}</p>
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post.html }}
