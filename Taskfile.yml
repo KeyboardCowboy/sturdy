@@ -15,10 +15,11 @@ silent: true
 #  VARNAME: var_value
 
 tasks:
-  gatsby:build:
+  build:
     cmds:
       - gatsby build
-  gatsby:dev:
+
+  dev:
     cmds:
       - gatsby develop -H 0.0.0.0 -p 8000
 

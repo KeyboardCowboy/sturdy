@@ -4,11 +4,13 @@ import { Link, graphql } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import PubDate from "../components/pubdate";
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.nodes
 
+  /* Empty Blog */
   if (posts.length === 0) {
     return (
       <Layout location={location} title={siteTitle}>
@@ -25,7 +27,7 @@ const BlogIndex = ({ data, location }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <Bio />
-      <ol style={{ listStyle: `none` }}>
+      <ol style={{ listStyle: `none` }} className="blog-list">
         {posts.map(post => {
           const title = post.frontmatter.title || post.fields.slug
 
@@ -42,7 +44,9 @@ const BlogIndex = ({ data, location }) => {
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
-                  <small>Posted: {post.frontmatter.date}{post.frontmatter.revised ? " | Revised: " + post.frontmatter.revised : ''}</small>
+                  <div className="metadata">
+                    <PubDate dates={post.frontmatter} />
+                  </div>
                 </header>
                 <section>
                   <p
@@ -71,25 +75,28 @@ export default BlogIndex
 export const Head = () => <Seo title="All posts" />
 
 export const pageQuery = graphql`
-  {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
-      nodes {
-        excerpt
-        fields {
-          slug
+    {
+        site {
+            siteMetadata {
+                title
+            }
         }
-        frontmatter {
-          date(formatString: "MMMM DD, YYYY")
-          revised(formatString: "MMMM DD, YYYY")
-          title
-          description
+        allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+            nodes {
+                excerpt
+                fields {
+                    slug
+                }
+                frontmatter {
+                   pubDateTime: date(formatString: "YYYY-MM-DD")
+                   pubDate: date(formatString: "MMMM DD, YYYY")
+                   revised
+                   revDateTime: revised(formatString: "YYYY-MM-DD")
+                   revDate: revised(formatString: "MMMM DD, YYYY")
+                    title
+                    description
+                }
+            }
         }
-      }
     }
-  }
 `

@@ -36,15 +36,15 @@ const Bio = () => {
         className="bio-avatar"
         layout="fixed"
         formats={["auto", "webp", "avif"]}
-        src="../images/memoji-wink.png"
-        width={50}
-        height={50}
+        src="../images/chris.jpeg"
+        width={100}
+        height={100}
         quality={95}
         alt="Profile picture"
       />
       {author?.name && (
         <p>
-          Written by <strong>{author.name}</strong> <em>{author?.summary || null}</em>
+          <strong>Hi, I'm Chris and I love hats.</strong>  KeyboardCowboy in the world of web development, Sturdy the cowboy tour guide around town, and just Chris at home: husband, entrepreneur, lover of the outdoors and aspiring minimalist.  These are my thoughts on life.
         </p>
       )}
     </div>

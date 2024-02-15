@@ -1,116 +1,122 @@
 import * as React from "react"
-import { Link, graphql } from "gatsby"
+import {Link, graphql} from "gatsby"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import PubDate from "../components/pubdate";
 
 const BlogPostTemplate = ({
-  data: { previous, next, site, markdownRemark: post },
-  location,
-}) => {
+                            data: {previous, next, site, markdownRemark: post},
+                            location,
+                          }) => {
   const siteTitle = site.siteMetadata?.title || `Title`
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <article
-        className="blog-post"
-        itemScope
-        itemType="http://schema.org/Article"
-      >
-        <header>
-          <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>Posted: {post.frontmatter.date}{post.frontmatter.revised ? " | Revised: " + post.frontmatter.revised : ''}</p>
-        </header>
-        <section
-          dangerouslySetInnerHTML={{ __html: post.html }}
-          itemProp="articleBody"
-        />
-        <hr />
-        <footer>
-          <Bio />
-        </footer>
-      </article>
-      <nav className="blog-post-nav">
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
+      <Layout location={location} title={siteTitle}>
+        <article
+            className="blog-post"
+            itemScope
+            itemType="http://schema.org/Article"
         >
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title} ({previous.frontmatter.date})
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
-      </nav>
-    </Layout>
+          <header>
+            <h1 itemProp="headline">{post.frontmatter.title}</h1>
+            <div className="metadata">
+              <PubDate dates={post.frontmatter} />
+            </div>
+          </header>
+          <section
+              dangerouslySetInnerHTML={{__html: post.html}}
+              itemProp="articleBody"
+          />
+          <hr/>
+          <footer>
+            <Bio/>
+          </footer>
+        </article>
+        <nav className="blog-post-nav">
+          <ul
+              style={{
+                display: `flex`,
+                flexWrap: `wrap`,
+                justifyContent: `space-between`,
+                listStyle: `none`,
+                padding: 0,
+              }}
+          >
+            <li>
+              {previous && (
+                  <Link to={previous.fields.slug} rel="prev">
+                    ← {previous.frontmatter.title} ({previous.frontmatter.date})
+                  </Link>
+              )}
+            </li>
+            <li>
+              {next && (
+                  <Link to={next.fields.slug} rel="next">
+                    {next.frontmatter.title} →
+                  </Link>
+              )}
+            </li>
+          </ul>
+        </nav>
+      </Layout>
   )
 }
 
-export const Head = ({ data: { markdownRemark: post } }) => {
+export const Head = ({data: {markdownRemark: post}}) => {
   return (
-    <Seo
-      title={post.frontmatter.title}
-      description={post.frontmatter.description || post.excerpt}
-    />
+      <Seo
+          title={post.frontmatter.title}
+          description={post.frontmatter.description || post.excerpt}
+      />
   )
 }
 
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query BlogPostBySlug(
-    $id: String!
-    $previousPostId: String
-    $nextPostId: String
-  ) {
-    site {
-      siteMetadata {
-        title
-      }
+    query BlogPostBySlug(
+        $id: String!
+        $previousPostId: String
+        $nextPostId: String
+    ) {
+        site {
+            siteMetadata {
+                title
+            }
+        }
+        markdownRemark(id: { eq: $id }) {
+            id
+            excerpt(pruneLength: 160)
+            html
+            frontmatter {
+                title
+                pubDateTime: date(formatString: "YYYY-MM-DD")
+                pubDate: date(formatString: "MMMM DD, YYYY")
+                revised
+                revDateTime: revised(formatString: "YYYY-MM-DD")
+                revDate: revised(formatString: "MMMM DD, YYYY")
+                description
+            }
+        }
+        previous: markdownRemark(id: { eq: $previousPostId }) {
+            fields {
+                slug
+            }
+            frontmatter {
+                title
+                date(formatString: "MMMM DD, YYYY")
+            }
+        }
+        next: markdownRemark(id: { eq: $nextPostId }) {
+            fields {
+                slug
+            }
+            frontmatter {
+                title
+                date(formatString: "MMMM DD, YYYY")
+            }
+        }
     }
-    markdownRemark(id: { eq: $id }) {
-      id
-      excerpt(pruneLength: 160)
-      html
-      frontmatter {
-        title
-        date(formatString: "MMMM DD, YYYY")
-        revised(formatString: "MMMM DD, YYYY")
-        description
-      }
-    }
-    previous: markdownRemark(id: { eq: $previousPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-        date(formatString: "MMMM DD, YYYY")
-      }
-    }
-    next: markdownRemark(id: { eq: $nextPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-        date(formatString: "MMMM DD, YYYY")
-      }
-    }
-  }
 `

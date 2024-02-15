@@ -42,6 +42,8 @@ const Seo = ({ description, title, children }) => {
       />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={metaDescription} />
+      <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
       {children}
     </>
   )
